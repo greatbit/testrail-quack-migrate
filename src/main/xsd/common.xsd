@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+           jaxb:extensionBindingPrefixes="inheritance"
+           jaxb:version="2.1"
+           elementFormDefault="qualified">
+
+    <xs:element name="suite" type="suite"/>
+    <xs:complexType name="suite">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="sections" type="sections"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="sections" type="sections"/>
+    <xs:complexType name="sections">
+        <xs:sequence>
+            <xs:element name="section" type="section" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:element name="section" type="section"/>
+    <xs:complexType name="section">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="cases" type="cases"/>
+            <xs:element name="sections" type="sections"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="cases" type="cases"/>
+    <xs:complexType name="cases">
+        <xs:sequence>
+            <xs:element name="case" type="case" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="case" type="case"/>
+    <xs:complexType name="case">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="template" type="xs:string"/>
+            <xs:element name="type" type="xs:string"/>
+            <xs:element name="priority" type="xs:string"/>
+            <xs:element name="estimate" type="xs:string"/>
+            <xs:element name="references" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="custom" type="custom"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="custom" type="custom"/>
+    <xs:complexType name="custom">
+        <xs:sequence>
+            <xs:element name="automation_type" type="automationType"/>
+            <xs:element name="steps_separated" type="steps_separated"/>
+            <xs:element name="preconds" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="automationType" type="automationType"/>
+    <xs:complexType name="automationType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="steps_separated" type="steps_separated"/>
+    <xs:complexType name="steps_separated">
+        <xs:sequence>
+            <xs:element name="step" type="step" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="step" type="step"/>
+    <xs:complexType name="step">
+        <xs:sequence>
+            <xs:element name="content" type="xs:string"/>
+            <xs:element name="expected" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+</xs:schema>
