@@ -84,11 +84,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--<archive>-->
-                    <!--<manifest>-->
-                    <!--<mainClass>com.adeccogroup.jwt.JwtValidator</mainClass>-->
-                    <!--</manifest>-->
-                    <!--</archive>-->
+                    <archive>
+                        <manifest>
+                            <mainClass>com.testquack.migrate.testrail.Main</mainClass>
+                        </manifest>
+                    </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
