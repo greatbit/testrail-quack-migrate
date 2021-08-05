@@ -1,6 +1,5 @@
 package com.testquack.migrate.testrail;
 
-
 import com.testquack.beans.Attribute;
 import com.testquack.beans.AttributeValue;
 import com.testquack.beans.TestCase;
@@ -10,13 +9,11 @@ import generated.Section;
 import generated.Step;
 import generated.Suite;
 import org.xml.sax.SAXException;
-import ru.greatbit.utils.serialize.XmlSerializer;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import javax.xml.bind.Unmarshaller;
+import java.io.*;
 import java.util.*;
 
 import static java.util.Collections.singletonList;
@@ -41,12 +38,11 @@ public class Main {
         final String filePath = args[2];
         final String token = args[3];
 
-        Path path = Paths.get(filePath);
-
-        StringBuffer sb = new StringBuffer();
-        Files.readAllLines(path).forEach(str -> sb.append(str));
-
-        Suite suite = XmlSerializer.unmarshal(sb.toString(), Suite.class);
+        JAXBContext contextObj = JAXBContext.newInstance(Suite.class);
+        Unmarshaller unmarshallerObj = contextObj.createUnmarshaller();
+        File initialFile = new File(filePath);
+        InputStream targetStream = new FileInputStream(initialFile);
+        Suite suite = (Suite) unmarshallerObj.unmarshal(targetStream);
 
         List<TestCase> testCases = new ArrayList<>();
 
@@ -74,6 +70,9 @@ public class Main {
         for(Attribute attribute: depthAttributesMap.values()){
             quackClient.updateAttribute(projectId, attribute).execute();
         }
+
+        testCases.forEach(testCase -> System.out.println("Case name: " + testCase.getName()));
+
 
         //Import testcases
         quackClient.importTestCases(projectId, testCases).execute();
